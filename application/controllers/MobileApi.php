@@ -102,12 +102,11 @@ class MobileApi extends REST_Controller {
             return 'Message successfully delivered' . PHP_EOL;
     }
 
-    function registration_get() {
+    function registration_get($name, $contact_no) {
         $this->config->load('rest', TRUE);
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-        $name = $this->get('name');
-        $contact_no = $this->get('contact_no');
+ 
         $usercode = rand(10000000, 99999999);
         $regArray = array(
             "name" => $name,
@@ -122,8 +121,8 @@ class MobileApi extends REST_Controller {
         $userdata = $query->row();
         if ($userdata) {
             $profiledata = array(
-                'name' => $this->get('name'),
-                'contact_no' => $this->get('contact_no'),
+                'name' => $name,
+                'contact_no' => $contact_no,
             );
             $this->db->set($profiledata);
             $this->db->where('contact_no', $contact_no); //set column_name and value in which row need to update
