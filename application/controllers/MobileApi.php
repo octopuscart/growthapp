@@ -137,6 +137,10 @@ class MobileApi extends REST_Controller {
             $this->response(array("status" => "done", "userdata" => $regArray));
         }
     }
+    
+    function registrationMob_get(){
+        $this->response(array("hello"=>"hello"));
+    }
 
     function synctable_post() {
         $this->config->load('rest', TRUE);
