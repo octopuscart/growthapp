@@ -107,26 +107,26 @@ class MobileApi extends REST_Controller {
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
         $name = $this->post('name');
-        $contact_no = $this->post('contact_no');
+        $email = $this->post('contact_no');
         $usercode = rand(10000000, 99999999);
         $regArray = array(
             "name" => $name,
-            "email" => "",
-            "contact_no" => $contact_no,
+            "email" => $email,
+            "contact_no" => "",
             "password" => $usercode,
             "usercode" => $usercode,
             "datetime" => date("Y-m-d H:i:s a")
         );
-        $this->db->where('contact_no', $contact_no);
+        $this->db->where('email', $email);
         $query = $this->db->get('app_user');
         $userdata = $query->row();
         if ($userdata) {
             $profiledata = array(
                 'name' => $this->post('name'),
-                'contact_no' => $this->post('contact_no'),
+                'email' => $this->post('email'),
             );
             $this->db->set($profiledata);
-            $this->db->where('contact_no', $contact_no); //set column_name and value in which row need to update
+            $this->db->where('email', $email); //set column_name and value in which row need to update
             $this->db->update("app_user");
             $this->response(array("status" => "already", "userdata" => $userdata));
         } else {
