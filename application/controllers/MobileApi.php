@@ -104,9 +104,6 @@ class MobileApi extends REST_Controller {
 
     function registration_get($name, $contact_no) {
         $this->config->load('rest', TRUE);
-        header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
- 
         $usercode = rand(10000000, 99999999);
         $regArray = array(
             "name" => $name,
