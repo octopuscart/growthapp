@@ -107,7 +107,7 @@ class MobileApi extends REST_Controller {
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
         $name = $this->post('name');
-        $email = $this->post('contact_no');
+        $email = $this->post('email');
         $usercode = rand(10000000, 99999999);
         $regArray = array(
             "name" => $name,
