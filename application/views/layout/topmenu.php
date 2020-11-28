@@ -30,11 +30,7 @@ if ($userdata) {
                     <span class="hidden-xs"><?php echo $userdata['first_name']; ?> <?php echo $userdata['last_name']; ?></span> <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu animated fadeInLeft">
-                    <li class="arrow"></li>
-                    <li><a href="<?php echo site_url("profile") ?>">Edit Profile</a></li>
-                    <li><a href="javascript:;"><span class="badge badge-danger pull-right">2</span> Inbox</a></li>
-                    <li><a href="javascript:;">Calendar</a></li>
-                    <li><a href="javascript:;">Setting</a></li>
+              
                     <li class="divider"></li>
                     <li><a href="<?php echo site_url("Authentication/logout") ?>">Log Out</a></li>
                 </ul>

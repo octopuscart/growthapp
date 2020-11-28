@@ -14,7 +14,7 @@ class Authentication extends CI_Controller {
         $data['login_user'] = $this->session->userdata('logged_in');
         $userdata = $this->userdata;
         if ($userdata) {
-            redirect("Songs/songs/1/0", "refresh");
+            redirect('BibleStudy/listPage/99', "refresh");
         } else {
             //        redirect("Authentication/index");
         }
@@ -64,7 +64,7 @@ class Authentication extends CI_Controller {
                         'icon' => 'happy.png'
                     );
                     $this->session->set_flashdata("checklogin", $message);
-                    redirect('Songs/songs/1/0');
+                    redirect('BibleStudy/listPage/99');
                 }
             } else {
                 $message = array(

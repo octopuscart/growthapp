@@ -195,51 +195,7 @@ foreach ($menu_control as $key => $value) {
                 </div>
             </li>
         </ul>
-        <!-- end sidebar user -->
-        <!-- begin sidebar nav -->
-        <ul class="nav">
-            <li class="nav-header">Navigation</li>
-
-            <?php
-            foreach ($menu_control as $mkey => $mvalue) {
-                if ($mvalue['sub_menu']) {
-                    ?>
-
-                    <li class="has-sub <?php echo $mvalue['active']; ?>">
-                        <a href="javascript:;">
-                            <b class="caret pull-right"></b>  
-                            <i class="<?php echo $mvalue['icon']; ?>"></i> 
-                            <span><?php echo $mvalue['title']; ?></span>
-                        </a>
-                        <ul class="sub-menu">
-                            <?php
-                            $submenu = $mvalue['sub_menu'];
-                            foreach ($submenu as $key => $value) {
-                                ?>
-                                <li><a href="<?php echo $value; ?>"><?php echo $key; ?></a></li>
-                            <?php } ?>
-                        </ul>
-                    </li>
-                    <?php
-                } else {
-                    ?>
-                    <li class="<?php echo $mvalue['active']; ?>">
-              
-                        <a href="<?php echo $mvalue['link']; ?>">
-                            
-                              <b class="fa fa-long-arrow-right pull-right" style="line-height: 22px;"></b>  
-                            <i class="<?php echo $mvalue['icon']; ?>"></i> 
-                            <span><?php echo $mvalue['title']; ?></span>
-                        </a>
-                    </li>
-                    <?php
-                }
-            }
-            ?>
-            <li class="nav-header"> Admin V <?php echo PANELVERSION; ?></li>
    
-        </ul>
-        <!-- end sidebar nav -->
     </div>
     <!-- end sidebar scrollbar -->
 </div>

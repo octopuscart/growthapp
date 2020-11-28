@@ -56,26 +56,27 @@ function truncate($str, $len) {
 </style>
 
 <!-- begin #content -->
-<div id="content" class="content"  >
+<div id="content" class="content"  ng-controller="BibleStudyDataController">
     <!-- begin breadcrumb -->
     <ol class="breadcrumb pull-right">
         <li><a href="javascript:;">Home</a></li>
-        <li class="active">App Pages</li>
+        <li class="active">Bible Study</li>
     </ol>
     <!-- end breadcrumb -->
     <!-- begin page-header -->
-    <h1 class="page-header">App Pages <small></small></h1>
+    <h1 class="page-header">Bible Study:- <?php echo $char_text;?> <small></small></h1>
     <!-- end page-header -->
 
     <div id="gallery" class="gallery row">
-        <div class="col-md-4">
+       
+        <div class="col-md-2 ">
             <div class="panel  panel-inverse">
                 <div class="list-group">
                     <?php
-                    foreach ($pagelist as $lkey => $lvalue) {
+                    foreach ($indexlist as $ikey => $ivalue) {
                         ?>
-                        <a href="<?php echo site_url("CMS/applicationPages/" . $lvalue->id) ?>" class="list-group-item <?php echo $lvalue->id == $page_id ? 'active' : ''; ?>">
-                            <?php echo $lvalue->title; ?>
+                        <a href="<?php echo site_url("BibleStudy/listPage/" . $ivalue->id) ?>" class="list-group-item <?php echo $ivalue->id == $char_id ? 'active' : ''; ?>">
+                            <?php echo $ivalue->title; ?>
                         </a>
                         <?php
                     }
@@ -85,53 +86,39 @@ function truncate($str, $len) {
             </div>
         </div>
 
-
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="col-md-12">
-                <div class="panel  panel-primary">
-                    <div class="panel-heading">
-                        <h2 class="panel-title"></h2><?php echo $pageobj->title; ?>
-                    </div>
+                <div class="panel  panel-inverse">
+                 
 
-                    <div class="panel-body">
 
-                     
-                        <form action="#" method="POST" enctype="multipart/form-data">
-                            <fieldset>
 
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Title</label>
-                                    <input type="text" class="form-control" name="sub_title"  placeholder="Enter Title Here" value="<?php echo $pageobj->sub_title; ?>">
-                                </div>
+                        <div class="list-group " >
+                            <li class="list-group-item active" style="height: 50px;    font-size: 20px;">
+                                Index List
+                                <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#addModal">Add New</button>
+                            </li>
+                               <li href="#" class="list-group-item  songitems">
+                                <div class="row">
+                                    <div class="songlyrics col-md-5">Title</div> 
                                 
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Body</label>
-                                    <textarea class="form-control" name="body"  placeholder="Type Lyrics Here" rows="10" value=""><?php echo $pageobj->body; ?></textarea>
                                 </div>
-                                
-                                <div class="" style="margin-bottom: 20px;">
+                            </li>
+                        </div>
+                        <div class="list-group ">
+                         
 
-                                <div class="btn-group" role="group" aria-label="..." style="float:left;margin-right: 10px;">
-                                    <span class="btn btn-success col fileinput-button" ">
-                                        <i class="fa fa-plus"></i>
-                                        <span>Add files...</span>
-                                        <input type="file" name="file"  file-model="filemodel" accept="image/*">
-                                    </span>
+
+                            <li href="#" class="list-group-item  songitems" ng-click="detailSong(bso)" ng-repeat="bso in resultData.bsList" style="cursor: pointer">
+                                <div class="row">
+                                    <div class="songlyrics col-md-5">{{$index+1}}: {{bso.title}}</div> 
                                 </div>
+                            </li>
 
 
-                                <span style="font-size: 10px;">  Attach File From Here (PDF, JPG, PNG Allowed)</span>
-
-                                <h2 style="    font-size: 12px;">{{filemodel.name}}</h2>
-                                <input type="hidden" name="file_real_name" value="{{filemodel.name}}"/>
-
-
-                            
-
-                                <button type="submit" name="update_data" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-save"></i> Update Now</button>
-                            </fieldset>
-                        </form>
-                    </div>
+                        </div>
+                        
+               
                 </div>
             </div>
         </div>
@@ -146,7 +133,7 @@ function truncate($str, $len) {
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Add New Song</h4>
+                    <h4 class="modal-title">Add New Bible Study</h4>
                 </div>
                 <div class="modal-body">
                     <form action="#" method="POST" enctype="multipart/form-data">
@@ -157,14 +144,11 @@ function truncate($str, $len) {
                                 <input type="text" class="form-control" name="title"  placeholder="Enter Title Here" value="">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Lyrics</label>
-                                <textarea class="form-control" name="lyrics"  placeholder="Type Lyrics Here" rows="20" value=""></textarea>
+                                <label for="exampleInputPassword1">Description</label>
+                                <textarea class="form-control" name="body"  placeholder="Type Lyrics Here" rows="20" value=""></textarea>
                             </div>
 
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Youtube Link</label>
-                                <input type="text" class="form-control" name="youtube_link"  placeholder="Enter Link Here" value="">
-                            </div>
+                       
 
                             <button type="submit" name="addnew" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-save"></i> Add Now</button>
                             <button type="button" data-dismiss="modal"  class="btn btn-sm btn-default" ><i class="fa fa-times"></i> Cancel</button>
@@ -193,14 +177,10 @@ function truncate($str, $len) {
                                 <input type="text" class="form-control" name="title"  placeholder="Enter Title Here" value="{{selected.title}}">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Lyrics</label>
-                                <textarea class="form-control" name="lyrics"  placeholder="Type Description Here" rows="20" value="{{selected.lyrics}}"></textarea>
+                                <label for="exampleInputPassword1">Description</label>
+                                <textarea class="form-control" name="body"  placeholder="Type Description Here" rows="20" value="{{selected.body}}"></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Youtube Link</label>
-                                <label for="exampleInputEmail1"></label>
-                                <input type="text" class="form-control" name="youtube_link"  placeholder="Enter Link Here" value="{{selected.youtube_link}}">
-                            </div>
+                        
 
 
 
@@ -227,7 +207,7 @@ $this->load->view('layout/footer');
 ?>
 <script>
     var gbltablename = "";
-    var gblurl = "<?php echo site_url("MobileApi/songList/" . $index_id) ?>";
+    var gblurl = "<?php echo site_url("MobileApi/getBibleStudyDataByIndex/" . $char_text) ?>";
     var deleteurl = "";
 </script>
 

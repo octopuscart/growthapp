@@ -1,8 +1,6 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 require(APPPATH . 'libraries/REST_Controller.php');
-
 class MobileApi extends REST_Controller {
 
     public function __construct() {
@@ -137,9 +135,9 @@ class MobileApi extends REST_Controller {
             $this->response(array("status" => "done", "userdata" => $regArray));
         }
     }
-    
-    function registrationMob_get(){
-        $this->response(array("hello"=>"hello"));
+
+    function registrationMob_get() {
+        $this->response(array("hello" => "hello"));
     }
 
     function synctable_post() {
@@ -153,14 +151,65 @@ class MobileApi extends REST_Controller {
         $this->db->set("server_id", $last_id);
         $this->db->where('id', $last_id); //set column_name and value in which row need to update
         $this->db->update($tablename);
+        $this->response(array("last_id" => $last_id));
+    }
+
+    function synctableUpdate_post() {
+        $this->config->load('rest', TRUE);
+        // $tempfilename = rand(100, 1000000);
+        $postdata = $this->post();
+        $tablename = "sync_" . $postdata['table_name'];
+        unset($postdata['table_name']);
+        $this->db->where("id", $postdata['server_id']);
+        $this->db->set('body', $postdata['body']); //set column_name and value in which row need to update
+        $this->db->update($tablename);
+        $this->response($postdata);
+    }
+
+    function synctableDelete_post() {
+        $this->config->load('rest', TRUE);
+        // $tempfilename = rand(100, 1000000);
+        $postdata = $this->post();
+        $tablename = "sync_" . $postdata['table_name'];
+        unset($postdata['table_name']);
+        $this->db->where("id", $postdata['server_id']);
+        $this->db->delete($tablename);
         $this->response($postdata);
     }
 
     function getUserSyncData_get($user_id) {
         $this->db->where('user_id', $user_id);
         $query = $this->db->get('sync_notes');
-        $userdatasync = $query->result_array();
+        $userdatasyncnote = $query->result_array();
+
+        $this->db->where('user_id', $user_id);
+        $query = $this->db->get('sync_scriptures');
+        $userdatasyncscrpt = $query->result_array();
+
+
+        $userdatasync = array("scriptures" => $userdatasyncscrpt, "notes" => $userdatasyncnote);
         $this->response($userdatasync);
+    }
+
+    function getBibleStudyDataByIndex_get($char_text) {
+        $this->db->where('char_text', $char_text);
+        $this->db->order_by("id desc");
+        $query = $this->db->get('bible_study');
+        $bible_study = $query->result_array();
+        $this->response($bible_study);
+    }
+    
+    function getBibleStudyData_get() {
+        $query = $this->db->get('bible_study');
+        $bible_study = $query->result_array();
+        $this->response($bible_study);
+    }
+
+    function getBibleStudyData2_get() {
+        $this->db->select("title, body, char_text as char, id as server_id");
+        $query = $this->db->get('bible_study');
+        $bible_study = $query->result_array();
+        $this->response($bible_study);
     }
 
 }
