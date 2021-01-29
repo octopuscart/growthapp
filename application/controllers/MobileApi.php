@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 require(APPPATH . 'libraries/REST_Controller.php');
 class MobileApi extends REST_Controller {
-
     public function __construct() {
         parent::__construct();
         $this->API_ACCESS_KEY = 'AIzaSyDexvTRWYvnqy5DM1OhCpZ0u3VFlticyk4';
@@ -198,7 +197,7 @@ class MobileApi extends REST_Controller {
         $bible_study = $query->result_array();
         $this->response($bible_study);
     }
-    
+
     function getBibleStudyData_get() {
         $query = $this->db->get('bible_study');
         $bible_study = $query->result_array();
@@ -210,6 +209,24 @@ class MobileApi extends REST_Controller {
         $query = $this->db->get('bible_study');
         $bible_study = $query->result_array();
         $this->response($bible_study);
+    }
+
+    function messageFromApp_post() {
+        $this->config->load('rest', TRUE);
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+        $name = $this->post('name');
+        $email = $this->post('email');
+        $contact_no = $this->post('contact_no');
+        $message = $this->post('message');
+        $regArray = array(
+            "name" => $name,
+            "email" => $email,
+            "contact_no" => $contact_no,
+            "password" => $message,
+            "datetime" => date("Y-m-d H:i:s a")
+        );
+        $this->response($regArray);
     }
 
 }
