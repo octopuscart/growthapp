@@ -262,6 +262,7 @@ class MobileApi extends REST_Controller {
             "message" => $message,
             "datetime" => date("Y-m-d H:i:s a")
         );
+        $this->sendEmailApp($regArray);
         $this->response($regArray);
     }
 
