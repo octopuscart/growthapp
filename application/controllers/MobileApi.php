@@ -1,7 +1,10 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 require(APPPATH . 'libraries/REST_Controller.php');
+
 class MobileApi extends REST_Controller {
+
     public function __construct() {
         parent::__construct();
         $this->API_ACCESS_KEY = 'AIzaSyDexvTRWYvnqy5DM1OhCpZ0u3VFlticyk4';
@@ -211,6 +214,39 @@ class MobileApi extends REST_Controller {
         $this->response($bible_study);
     }
 
+    function sendEmailApp($emailarray) {
+        $data['contact'] = $emailarray;
+        $emailsender = EMAIL_SENDER;
+        $sendername = EMAIL_SENDER_NAME;
+        $email_bcc = EMAIL_BCC;
+        $this->email->set_newline("\r\n");
+        $this->email->from($emailsender, $sendername);
+        $this->email->to($email_bcc);
+        $subject = "Message From Christian Visionary Radio Mobile App";
+        $this->email->subject($subject);
+        $htmlsmessage = $this->load->view('Email/weborder', $data, true);
+        $this->email->message($htmlsmessage);
+        $this->email->print_debugger();
+        $send = $this->email->send();
+        if ($send) {
+            echo json_encode("send");
+        } else {
+            $error = $this->email->print_debugger(array('headers'));
+            echo json_encode($error);
+        }
+    }
+
+    function sendTestMail_get() {
+        $emailarray = array(
+            "name" => "testname",
+            "email" => "test@gmail.com",
+            "contact_no" => "8602648733",
+            "message" => "daf dsfdsaf dsaf dsa fadsf sadf adsfds \a dfas asd\n asdfas asdfas asdfa sd\n afasdf",
+            "datetime" => date("Y-m-d H:i:s a")
+        );
+        $this->sendEmailApp($emailarray);
+    }
+
     function messageFromApp_post() {
         $this->config->load('rest', TRUE);
         header('Access-Control-Allow-Origin: *');
@@ -223,7 +259,7 @@ class MobileApi extends REST_Controller {
             "name" => $name,
             "email" => $email,
             "contact_no" => $contact_no,
-            "password" => $message,
+            "message" => $message,
             "datetime" => date("Y-m-d H:i:s a")
         );
         $this->response($regArray);
