@@ -144,7 +144,8 @@ class MobileApi extends REST_Controller {
 
     function synctable_post() {
         $this->config->load('rest', TRUE);
-        // $tempfilename = rand(100, 1000000);
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
         $postdata = $this->post();
         $tablename = "sync_" . $postdata['table_name'];
         unset($postdata['table_name']);
@@ -158,7 +159,8 @@ class MobileApi extends REST_Controller {
 
     function synctableUpdate_post() {
         $this->config->load('rest', TRUE);
-        // $tempfilename = rand(100, 1000000);
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
         $postdata = $this->post();
         $tablename = "sync_" . $postdata['table_name'];
         unset($postdata['table_name']);
@@ -170,7 +172,8 @@ class MobileApi extends REST_Controller {
 
     function synctableDelete_post() {
         $this->config->load('rest', TRUE);
-        // $tempfilename = rand(100, 1000000);
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
         $postdata = $this->post();
         $tablename = "sync_" . $postdata['table_name'];
         unset($postdata['table_name']);
