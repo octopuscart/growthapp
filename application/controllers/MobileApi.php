@@ -166,7 +166,7 @@ class MobileApi extends REST_Controller {
         unset($postdata['table_name']);
         $this->db->where("id", $postdata['server_id']);
         $this->db->set('body', $postdata['body']);
-        if ($postdata['table_name'] == 'notes') {
+        if ($tablename == 'sync_notes') {
             $this->db->set('title', $postdata['title']);
         }//set column_name and value in which row need to update
         $this->db->update($tablename);
