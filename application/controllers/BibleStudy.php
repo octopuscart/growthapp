@@ -91,15 +91,8 @@ class BibleStudy extends CI_Controller {
 
     
      function synctableUpdate() {
-        header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-        $postdata = $this->input->post();
-        $tablename = "sync_" . $postdata['table_name'];
-        unset($postdata['table_name']);
-        $this->db->where("id", $postdata['server_id']);
-        $this->db->set('body', $postdata['body']); //set column_name and value in which row need to update
-        $this->db->update($tablename);
-        echo json_encode("hello=====================");
+   
+       echo json_encode("hello=====================");
     }
 
 }
