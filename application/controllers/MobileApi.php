@@ -142,21 +142,6 @@ class MobileApi extends REST_Controller {
         $this->response(array("hello" => "hello"));
     }
 
-    function synctable_get() {
-        $this->config->load('rest', TRUE);
-        header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-//        $postdata = $this->post();
-//        $tablename = "sync_" . $postdata['table_name'];
-//        unset($postdata['table_name']);
-//        $this->db->insert($tablename, $postdata);
-//        $last_id = $this->db->insert_id();
-//        $this->db->set("server_id", $last_id);
-//        $this->db->where('id', $last_id); //set column_name and value in which row need to update
-//        $this->db->update($tablename);
-        $this->response(array("last_id" => 1));
-    }
-    
     function synctable_post() {
         $this->config->load('rest', TRUE);
         header('Access-Control-Allow-Origin: *');
@@ -180,7 +165,10 @@ class MobileApi extends REST_Controller {
         $tablename = "sync_" . $postdata['table_name'];
         unset($postdata['table_name']);
         $this->db->where("id", $postdata['server_id']);
-        $this->db->set('body', $postdata['body']); //set column_name and value in which row need to update
+        $this->db->set('body', $postdata['body']);
+        if ($postdata['table_name'] == 'notes') {
+            $this->db->set('title', $postdata['title']);
+        }//set column_name and value in which row need to update
         $this->db->update($tablename);
         $this->response($postdata);
     }
